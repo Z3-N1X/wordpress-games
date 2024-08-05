@@ -4,7 +4,7 @@ function guess_the_number() {
     $htmlFile = fopen(dirname(dirname(__FILE__)).'/templates/index.html',"r");
     $htmlFileContent = fgets($htmlFile);
     fclose($htmlFile);
-    wp_enqueue_script("guessthenumber", "wp-content/plugins/zenGamePlugin/assets/js/guessTheNumber.js");
+    wp_enqueue_script("guessthenumber", "/wp-content/plugins/zenGamePlugin/assets/js/guessTheNumber.js");
     return str_replace('$guessedNumber',$correctNumber,$htmlFileContent);
 }
 
