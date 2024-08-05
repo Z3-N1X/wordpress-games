@@ -4,6 +4,7 @@ function guess_the_number() {
     $htmlFile = fopen(dirname(dirname(__FILE__)).'/templates/index.html',"r");
     $htmlFileContent = fgets($htmlFile);
     fclose($htmlFile);
+    wp_enqueue_script("guessthenumber", plugins_url('/assets/js/guessTheNumber.js',__FILE__));
     return str_replace('$guessedNumber',$correctNumber,$htmlFileContent);
 }
 
