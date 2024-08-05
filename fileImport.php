@@ -17,7 +17,7 @@ function importingAllStyles()
 
 function importingAllScripts() 
 {
-    wp_enqueue_script("guessthenumber", plugins_url('/assets/js/guessTheNumber.css',__FILE__));
+    wp_enqueue_script("guessthenumber", plugins_url('/assets/js/guessTheNumber.js',__FILE__));
 }
 
 function onScriptImport()
