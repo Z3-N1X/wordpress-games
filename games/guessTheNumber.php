@@ -4,8 +4,9 @@ function guess_the_number() {
     $htmlFile = fopen(dirname(dirname(__FILE__)).'/templates/index.html',"r");
     $htmlFileContent = fgets($htmlFile);
     fclose($htmlFile);
-    return str_replace($htmlFileContent,'$guessedNumber',$correctNumber);
+    return str_replace('$guessedNumber',$correctNumber,$htmlFileContent);
 }
 
+echo str_replace("mike","world","Hi mike");
 
 add_shortcode("numberGuess", 'guess_the_number');
