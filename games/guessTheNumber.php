@@ -1,7 +1,7 @@
 <?php
 function guess_the_number() {
     $correctNumber = rand(1,3);
-    $htmlFile = fopen(dirname(dirname(__FILE__))."\templates\index.html","r");
+    $htmlFile = fopen(dirname(dirname(__FILE__)).'\templates\index.html',"r");
     $htmlFileContent = fgets($htmlFile);
     fclose($htmlFile);
     return $htmlFileContent;
