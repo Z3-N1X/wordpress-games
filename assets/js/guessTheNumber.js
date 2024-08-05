@@ -1,3 +1,6 @@
+console.log("GTN JS is loaded")
+
+
 document.addEventListener("load",function () {
     console.log("document is loaded");
     document.getElementById("zen-guess-the-number-input").addEventListener("oninput",function () {
