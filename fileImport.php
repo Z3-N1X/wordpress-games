@@ -8,4 +8,11 @@ function importAllFiles() {
     require_once( $pluginDir."/games/guessTheNumber.php");
 }
 
+
+function importingAllStyles() {
+    wp_enqueue_style("guessthenumber", plugins_url('/assets/css/guessTheNumber.css',__FILE__));
+}
+
+
 importAllFiles();
+add_action('wp_enqueue_scripts','importingAllStyles');

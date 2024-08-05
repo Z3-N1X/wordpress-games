@@ -4,7 +4,7 @@ function guess_the_number() {
     $htmlFile = fopen(dirname(dirname(__FILE__)).'/templates/index.html',"r");
     $htmlFileContent = fgets($htmlFile);
     fclose($htmlFile);
-    return $htmlFileContent;
+    return str_replace($htmlFileContent,'$guessedNumber',$correctNumber);
 }
 
 
