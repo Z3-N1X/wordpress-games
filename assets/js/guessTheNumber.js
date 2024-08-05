@@ -18,11 +18,13 @@ gtnInput.addEventListener("input",function () {
             count: party.variation.range(20, 40)
         });
         gtnHeader.innerText = "You Win";
+        gtnHeader.className = "z3n-gtn-header-win";
         console.log("You got it!")
     }
     else
     {
         gtnHeader.innerText = "Not Right";
+        gtnHeader.className = "z3n-gtn-header-loose";
         gtnInput.value = "";
         console.log("Not quite correct")
     }
