@@ -7,6 +7,4 @@ function guess_the_number() {
     return str_replace('$guessedNumber',$correctNumber,$htmlFileContent);
 }
 
-echo str_replace("mike","world","Hi mike");
-
 add_shortcode("numberGuess", 'guess_the_number');
