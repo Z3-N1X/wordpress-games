@@ -5,18 +5,25 @@ document.addEventListener("load",function () {
     console.log("document is loaded");
     
 })
-document.getElementById("zen-guess-the-number-input").addEventListener("input",function () {
+
+const gtnInput = document.getElementById("zen-guess-the-number-input")
+const gtnHeader = document.getElementById("zen-guess-the-number-header")
+
+gtnInput.addEventListener("input",function () {
     console.log("input is changed");
-    var humanGuessedNumber = document.getElementById("zen-guess-the-number-input").value;
-    if (humanGuessedNumber == document.getElementById("zen-guess-the-number-input").getAttribute("hint")) 
+    var humanGuessedNumber = gtnInput.value;
+    if (humanGuessedNumber == gtnInput.getAttribute("hint")) 
     {
-        party.confetti(getElementById("zen-guess-the-number-input"), {
+        party.confetti(gtnInput, {
             count: party.variation.range(20, 40)
         });
+        gtnHeader.innerText = "You Win";
         console.log("You got it!")
     }
     else
     {
+        gtnHeader.innerText = "Not Right";
+        gtnInput.value = "";
         console.log("Not quite correct")
     }
 })
