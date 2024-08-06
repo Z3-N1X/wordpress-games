@@ -7,6 +7,7 @@ function importAllFiles()
 {
     $pluginDir = dirname(__FILE__);
     require_once( $pluginDir."/games/guessTheNumber.php");
+    require_once( $pluginDir."/games/flappyBird.php");
 }
 
 
