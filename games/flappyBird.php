@@ -3,9 +3,8 @@ function flappy_bird() {
     $htmlFile = fopen(dirname(dirname(__FILE__)).'/templates/flappyHtml.html',"r");
     $htmlFileContent = fgets($htmlFile);
     fclose($htmlFile);
-    echo dirname(dirname(__FILE__)).'/assets/js/flappyBird.js';
-    wp_enqueue_script("flappybird", dirname(dirname(__FILE__)).'/assets/js/flappyBird.js');
-    wp_enqueue_style("flappybird", dirname(dirname(__FILE__)).'/assets/css/flappyBirdStyle.css');
+    wp_enqueue_script("flappybird", str_replace('/home/wimeegfh/public_html/','',dirname(dirname(__FILE__))).'/assets/js/flappyBird.js');
+    wp_enqueue_style("flappybird", str_replace('/home/wimeegfh/public_html/','',dirname(dirname(__FILE__))).'/assets/css/flappyBirdStyle.css');
     return $htmlFileContent;
 }
 
