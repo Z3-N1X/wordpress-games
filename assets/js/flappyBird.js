@@ -3,23 +3,26 @@ console.log("Flappy Bird is loaded!");
 var myGamePiece;
 var myObstacles = [];
 var myScore;
+var isGameEnded= false;
 
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 10, 120);
+    myGamePiece = new component(30, 30, "#C5714A", 10, 120,"player");
     myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myScore = new component("30px", "Consolas", "black", screen.width*6/10-30, 40, "text");
     myGameArea.start();
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
+        this.canvas.width = screen.width*8/10;
         this.canvas.height = 270;
+        this.canvas.id="z3n-fb-canva"
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
+        
+        document.getElementById("help-pls").appendChild(this.canvas);
+        this.frameNo = 0;   
         this.interval = setInterval(updateGameArea, 20);
         },
     clear : function() {
@@ -39,14 +42,26 @@ function component(width, height, color, x, y, type) {
     this.gravity = 0;
     this.gravitySpeed = 0;
     this.update = function() {
+        
         ctx = myGameArea.context;
+
         if (this.type == "text") {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
         } else {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+                
+                ctx.fillStyle = color;
+                ctx.strokeStyle  = "#352021";
+                if (this.type == "player") {
+                    ctx.arc(this.x,this.y,0,0.5,0)
+                    // ctx.rotate(0.1);
+                }
+                ctx.beginPath();
+                ctx.roundRect(this.x, this.y, this.width, this.height, 5);
+                ctx.stroke();
+                ctx.fill();
+            
         }
     }
     this.newPos = function() {
@@ -54,6 +69,7 @@ function component(width, height, color, x, y, type) {
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
+        this.hitTop();
     }
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
@@ -62,6 +78,15 @@ function component(width, height, color, x, y, type) {
             this.gravitySpeed = 0;
         }
     }
+
+    this.hitTop = function() {
+        var canvaTop = myGameArea.canvas.height-270;
+        if (this.y < canvaTop) {
+            this.y = canvaTop;
+            this.gravitySpeed = 0;
+        }
+    }
+
     this.crashWith = function(otherobj) {
         var myleft = this.x;
         var myright = this.x + (this.width);
@@ -83,12 +108,16 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
-            return;
+        isGameEnded = true;
+        clickToRestart = new component("30px", "Consolas", "red", screen.width*6/10-30,80, "text");
+        clickToRestart.text = "Click To Restart";
+        clickToRestart.update();
+        return;
         } 
     }
     myGameArea.clear();
     myGameArea.frameNo += 1;
-    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+    if (myGameArea.frameNo == 1 || everyinterval(75)) {
         x = myGameArea.canvas.width;
         minHeight = 20;
         maxHeight = 200;
@@ -96,14 +125,16 @@ function updateGameArea() {
         minGap = 50;
         maxGap = 200;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "green", x, 0));
-        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+        myObstacles.push(new component(10, height, "white", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "white", x, height + gap));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].x += -1;
+        myObstacles[i].x += -2;
         myObstacles[i].update();
     }
-    myScore.text="SCORE: " + myGameArea.frameNo;
+    if (! isGameEnded) {
+        myScore.text="SCORE: " + myGameArea.frameNo;
+    }
     myScore.update();
     myGamePiece.newPos();
     myGamePiece.update();
@@ -113,7 +144,12 @@ function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
-
-function accelerate(n) {
+function accelerateup(n) {
+    if ( isGameEnded) {
+        location.reload();
+    }
+    myGamePiece.gravity = -1*n;
+}
+function acceleratedown(n) {
     myGamePiece.gravity = n;
 }
